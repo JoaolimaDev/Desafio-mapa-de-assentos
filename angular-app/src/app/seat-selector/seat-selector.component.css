@@ -1,0 +1,20 @@
+.seat-container {
+    display: grid;
+    grid-template-columns: repeat(5, auto);
+    gap: 10px;
+    justify-content: center;
+    margin-top: 5%;
+}
+
+mat-icon {
+    cursor: pointer;
+    color: blue;
+    transition: color 0.3s;
+    width: 100px;
+    height: 100px;
+    font-size: 100px;
+}
+
+.selected {
+    color: red;
+}

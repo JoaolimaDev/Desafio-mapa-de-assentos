@@ -1,0 +1,15 @@
+  
+
+<div class="seat-container">
+
+
+    <mat-icon 
+    *ngFor="let seat of seats" 
+    (click)="toggleSeat(seat)"
+    [ngClass]="{ 'selected': seat.selected }">
+    event_seat
+    </mat-icon>
+
+    
+</div>
+    
