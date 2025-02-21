@@ -15,7 +15,8 @@ public class securityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
 
         http.authorizeHttpRequests(auth -> auth
-        .requestMatchers( "/seat/**").permitAll()
+        .requestMatchers( "/api/booking/**").permitAll()
+        .requestMatchers( "/api/seat/**").permitAll()
         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll() 
         .anyRequest().permitAll())
         .csrf(csrf -> csrf.disable())
