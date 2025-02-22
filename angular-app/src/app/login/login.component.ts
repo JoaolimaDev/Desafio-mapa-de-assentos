@@ -3,6 +3,8 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { ApiService } from '../services/api.service';
+import { Login } from '../models/login';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +20,7 @@ export class LoginComponent {
   loginForm: FormGroup;
 
 
-  constructor() {
+  constructor(private apiService: ApiService) {
     this.loginForm = new FormGroup({
       email: new FormControl(''),
       senha: new FormControl('')
@@ -28,9 +30,9 @@ export class LoginComponent {
 
   onSubmit() {
     
-    console.log(this.loginForm.value);
-  
-
+    
+    const loginData: Login = this.loginForm.value;
+    this.apiService.login(loginData);
   }
 
 }

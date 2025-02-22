@@ -28,7 +28,7 @@ public class DatabaseConfig {
     @PostConstruct
     public void init() {
 
-        if (userRepository.count() == 0) {
+        if (userRepository.findByUsername("user1" ).isEmpty() && userRepository.findByUsername("user2" ).isEmpty()) {
             
             User admin = new User();
             admin.setUsername("user1");
