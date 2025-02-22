@@ -32,7 +32,6 @@ public class securityConfig {
 
         http.authorizeHttpRequests(auth -> auth
         .requestMatchers( "/api/booking/**").authenticated()
-        .requestMatchers(HttpMethod.PUT,  "/api/booking/**").hasRole("ADMIN")
         .requestMatchers( "/api/seat/**").authenticated()
         .requestMatchers( "/api/user/**").authenticated()
         .requestMatchers( "/api/auth/login/**").permitAll()
