@@ -9,6 +9,5 @@ import com.fibbo.spring_app.domain.model.Seat;
 @RepositoryRestResource(path = "seat")
 public interface SeatRepository extends JpaRepository<Seat, UUID>{
 
-    
-    
+
 }
