@@ -3,6 +3,10 @@ package com.fibbo.spring_app.service.impl;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -93,8 +97,12 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<Booking> listBookings() {
-        return bookingRepository.findAll();
+    public Page<Booking> listBookings(int page, int size) {
+
+        PageRequest pageRequest = PageRequest.of(page, size);
+
+        return bookingRepository.findAll(pageRequest);
+        
     }
 
     @Override
@@ -103,6 +111,15 @@ public class BookingServiceImpl implements BookingService {
         return bookingRepository.findById(Long.parseLong(id))
         .orElseThrow(() -> new CustomException("Nenhum registro disponível para o id enviado! " + id,
         HttpStatus.BAD_REQUEST));
+    }
+
+    @Override
+    public void deleteBooking(String id) {
+        
+        Booking booking = bookingRepository.findById(Long.parseLong(id))
+        .orElseThrow(() -> new CustomException("Nenhuma reserva encontrada para o id: " + id
+        , HttpStatus.BAD_REQUEST));
+        bookingRepository.delete(booking);
     }
     
 }

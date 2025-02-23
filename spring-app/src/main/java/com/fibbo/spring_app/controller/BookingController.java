@@ -4,7 +4,10 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +20,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.fibbo.spring_app.domain.dto.BookingDTO;
 import com.fibbo.spring_app.domain.dto.BookingResponseDTO;
+import com.fibbo.spring_app.domain.dto.PageDTO;
+import com.fibbo.spring_app.domain.dto.Response;
 import com.fibbo.spring_app.domain.model.Booking;
 import com.fibbo.spring_app.service.BookingService;
 
@@ -50,24 +55,25 @@ public class BookingController {
 
         return ResponseEntity.created(URI.create(uri)).body(response);
     }
+
+    @DeleteMapping("/")
+    public ResponseEntity<Response> deleteBooking(@RequestParam String id){
+
+        bookingService.deleteBooking(id);
+        return ResponseEntity.ok().body(new Response(id + " Deletado com sucesso!", HttpStatus.OK.name()));
+        
+    }
     
 
     @GetMapping("/")
-    public  ResponseEntity<List<BookingResponseDTO>> listBookings(){
+    public  ResponseEntity<PageDTO<BookingResponseDTO>> listBookings(
+        @RequestParam int page, @RequestParam int size
+    ){
 
-
-        List<Booking> bookings = bookingService.listBookings();
-        List<BookingResponseDTO> bookingResponseDTOs = new ArrayList<>();
-
-        for (Booking booking : bookings) {  
-
-            BookingResponseDTO bookingResponseDTO = new BookingResponseDTO(booking);
-            
-            bookingResponseDTOs.add(bookingResponseDTO);
-        }
-
+        Page<Booking> bookingPage = bookingService.listBookings(page, size);
+        PageDTO<BookingResponseDTO> pageDTO = new PageDTO<>(bookingPage, BookingResponseDTO::new);
         
-        return ResponseEntity.ok().body(bookingResponseDTOs);
+        return ResponseEntity.ok(pageDTO);
         
     }
 

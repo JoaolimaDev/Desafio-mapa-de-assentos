@@ -170,16 +170,18 @@ public class BookingControllerTest {
 
         String seatId = seat.getId().toString();
         
-        BookingDTO bookingDTO = new BookingDTO("user1", seatId, "ALOCACAO");
+        BookingDTO bookingDTO = new BookingDTO(seatId, "ALOCACAO");
 
         mockMvc.perform(post("/api/booking/")
-                .contentType(MediaType.APPLICATION_JSON)
-                .cookie(new Cookie("jwt", jwtCookieValue))
-                .content(objectMapper.writeValueAsString(bookingDTO)))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.userName").value("user1"))
-                .andExpect(jsonPath("$.seatId").value(seatId))
-                .andExpect(jsonPath("$.acao").value("ALOCACAO"));
+        .contentType(MediaType.APPLICATION_JSON)
+        .cookie(new Cookie("jwt", jwtCookieValue))
+        .content(objectMapper.writeValueAsString(bookingDTO)))
+        .andExpect(status().isCreated())
+        .andExpect(jsonPath("$.user.username").value("user1"))
+        .andExpect(jsonPath("$.seat.id").value(seatId))
+        .andExpect(jsonPath("$.seat.ocupada").value(true))
+        .andExpect(jsonPath("$.acao").value("ALOCACAO"));
+
     }
 
     @Test
@@ -199,17 +201,19 @@ public class BookingControllerTest {
         bookingRepository.save(booking);
 
 
-        BookingDTO bookingDTO = new BookingDTO("user1", seatId, "REMOCAO");
+        BookingDTO bookingDTO = new BookingDTO(seatId, "REMOCAO");
         String bookingId = booking.getId().toString(); 
 
         mockMvc.perform(put("/api/booking/")
-                .param("id", bookingId)
-                .contentType(MediaType.APPLICATION_JSON)
-                .cookie(new Cookie("jwt", jwtCookieValue))
-                .content(objectMapper.writeValueAsString(bookingDTO)))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.userName").value("user1"))
-                .andExpect(jsonPath("$.seatId").value(seatId))
-                .andExpect(jsonPath("$.acao").value("REMOCAO"));
+        .param("id", bookingId)
+        .contentType(MediaType.APPLICATION_JSON)
+        .cookie(new Cookie("jwt", jwtCookieValue))
+        .content(objectMapper.writeValueAsString(bookingDTO)))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.user.username").value("user1"))
+        .andExpect(jsonPath("$.seat.id").value(seatId))
+        .andExpect(jsonPath("$.seat.ocupada").value(false))
+        .andExpect(jsonPath("$.acao").value("REMOCAO"));
+
     }
 }
