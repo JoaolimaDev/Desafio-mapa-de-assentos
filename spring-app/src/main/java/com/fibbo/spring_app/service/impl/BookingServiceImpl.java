@@ -1,11 +1,13 @@
 package com.fibbo.spring_app.service.impl;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.fibbo.spring_app.config.ExceptionHandler.CustomException;
+import com.fibbo.spring_app.config.security.utilieis.JwtUtilities;
 import com.fibbo.spring_app.domain.dto.BookingDTO;
 import com.fibbo.spring_app.domain.model.Booking;
 import com.fibbo.spring_app.domain.model.Seat;
@@ -15,6 +17,7 @@ import com.fibbo.spring_app.domain.repository.SeatRepository;
 import com.fibbo.spring_app.domain.repository.UserRepository;
 import com.fibbo.spring_app.service.BookingService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -24,11 +27,16 @@ public class BookingServiceImpl implements BookingService {
     public final BookingRepository bookingRepository;
     public final UserRepository userRepository;
     public final SeatRepository seatRepository;
+    public final JwtUtilities jwtUtil;
+
 
     @Override
-    public Booking updateBooking(String id, BookingDTO bookingRequest) { 
+    public Booking updateBooking(HttpServletRequest request, String id, BookingDTO bookingRequest) { 
 
-        User user = userRepository.findByUsername(bookingRequest.userName())
+        String jwt = jwtUtil.extractJwtFromCookie(request);
+        String username = jwtUtil.extractUsername(jwt);
+
+        User user = userRepository.findByUsername(username)
         .orElseThrow(() -> new CustomException("Usuário inválido!", HttpStatus.BAD_REQUEST));
 
         Booking booking = bookingRepository.findById(Long.parseLong(id))
@@ -41,24 +49,25 @@ public class BookingServiceImpl implements BookingService {
         }
 
         booking.setAcao(Booking.StatusBooking.valueOf(bookingRequest.acao()));
+        booking.getSeat().setOcupada(false);
 
         if (bookingRequest.acao().contains("ALOCACAO")) {
             
             booking.getSeat().setOcupada(true);
-        }else{
 
-            booking.getSeat().setOcupada(false);
         }
-        
-
+   
         return bookingRepository.save(booking);
     }
 
     @Override
-    public Booking createBooking(BookingDTO bookingRequest) {
+    public Booking createBooking(HttpServletRequest request , BookingDTO bookingRequest) {
 
 
-        User user = userRepository.findByUsername(bookingRequest.userName())
+        String jwt = jwtUtil.extractJwtFromCookie(request);
+        String username = jwtUtil.extractUsername(jwt);
+
+        User user = userRepository.findByUsername(username)
         .orElseThrow(() -> new CustomException("Usuário inválido!", HttpStatus.BAD_REQUEST));
 
         Seat seat = seatRepository.findById(UUID.fromString(bookingRequest.seatId()))
@@ -83,6 +92,17 @@ public class BookingServiceImpl implements BookingService {
         return bookingRepository.save(booking);
     }
 
- 
+    @Override
+    public List<Booking> listBookings() {
+        return bookingRepository.findAll();
+    }
+
+    @Override
+    public Booking getBookingById(String id) {
+        
+        return bookingRepository.findById(Long.parseLong(id))
+        .orElseThrow(() -> new CustomException("Nenhum registro disponível para o id enviado! " + id,
+        HttpStatus.BAD_REQUEST));
+    }
     
 }

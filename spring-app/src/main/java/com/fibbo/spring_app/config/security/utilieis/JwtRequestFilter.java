@@ -11,7 +11,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +27,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain)
         throws ServletException, IOException {
 
-        String jwt = extractJwtFromCookie(request);
+        String jwt = jwtUtil.extractJwtFromCookie(request);
         String username = (jwt != null) ? jwtUtil.extractUsername(jwt) : null;
     
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null && isValidToken(jwt, username)) {
@@ -42,16 +41,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
     }
 
-    private String extractJwtFromCookie(HttpServletRequest request) {
-        if (request.getCookies() != null) {
-            for (Cookie cookie : request.getCookies()) {
-                if ("jwt".equals(cookie.getName())) {
-                    return cookie.getValue(); 
-                }
-            }
-        }
-        return null;
-    }
     private UserDetails userDetails(String username){
         return userService.loadUserByUsername(username);
     }
