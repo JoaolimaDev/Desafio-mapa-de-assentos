@@ -7,8 +7,13 @@ com/fibbo/spring_app/domain/model/Seat.class
 com/fibbo/spring_app/service/impl/UserServiceImpl.class
 com/fibbo/spring_app/domain/repository/SeatRepository.class
 com/fibbo/spring_app/domain/dto/Response.class
+com/fibbo/spring_app/service/SeatService.class
+com/fibbo/spring_app/controller/SeatController.class
 com/fibbo/spring_app/domain/repository/UserRepository.class
 com/fibbo/spring_app/domain/model/Booking.class
+com/fibbo/spring_app/domain/dto/BookingResponseDTO.class
+com/fibbo/spring_app/service/impl/SeatServiceImpl.class
+com/fibbo/spring_app/domain/dto/PageDTO.class
 com/fibbo/spring_app/service/impl/BookingServiceImpl.class
 com/fibbo/spring_app/domain/dto/LoginRequest.class
 com/fibbo/spring_app/service/userService.class
@@ -17,6 +22,7 @@ com/fibbo/spring_app/service/BookingService.class
 com/fibbo/spring_app/config/security/utilieis/JwtUtilities.class
 com/fibbo/spring_app/controller/BookingController.class
 com/fibbo/spring_app/domain/model/Booking$StatusBooking.class
+com/fibbo/spring_app/domain/dto/UserDTO.class
 com/fibbo/spring_app/domain/model/User.class
 com/fibbo/spring_app/domain/dto/BookingDTO.class
 com/fibbo/spring_app/config/ExceptionHandler/CustomException.class

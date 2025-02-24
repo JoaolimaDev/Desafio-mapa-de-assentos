@@ -7,10 +7,14 @@
 /home/joao/Área de trabalho/Desafio-mapa-de-assentos/spring-app/src/main/java/com/fibbo/spring_app/config/security/utilieis/JwtRequestFilter.java
 /home/joao/Área de trabalho/Desafio-mapa-de-assentos/spring-app/src/main/java/com/fibbo/spring_app/config/security/utilieis/JwtUtilities.java
 /home/joao/Área de trabalho/Desafio-mapa-de-assentos/spring-app/src/main/java/com/fibbo/spring_app/controller/BookingController.java
+/home/joao/Área de trabalho/Desafio-mapa-de-assentos/spring-app/src/main/java/com/fibbo/spring_app/controller/SeatController.java
 /home/joao/Área de trabalho/Desafio-mapa-de-assentos/spring-app/src/main/java/com/fibbo/spring_app/controller/loginController.java
 /home/joao/Área de trabalho/Desafio-mapa-de-assentos/spring-app/src/main/java/com/fibbo/spring_app/domain/dto/BookingDTO.java
+/home/joao/Área de trabalho/Desafio-mapa-de-assentos/spring-app/src/main/java/com/fibbo/spring_app/domain/dto/BookingResponseDTO.java
 /home/joao/Área de trabalho/Desafio-mapa-de-assentos/spring-app/src/main/java/com/fibbo/spring_app/domain/dto/LoginRequest.java
+/home/joao/Área de trabalho/Desafio-mapa-de-assentos/spring-app/src/main/java/com/fibbo/spring_app/domain/dto/PageDTO.java
 /home/joao/Área de trabalho/Desafio-mapa-de-assentos/spring-app/src/main/java/com/fibbo/spring_app/domain/dto/Response.java
+/home/joao/Área de trabalho/Desafio-mapa-de-assentos/spring-app/src/main/java/com/fibbo/spring_app/domain/dto/UserDTO.java
 /home/joao/Área de trabalho/Desafio-mapa-de-assentos/spring-app/src/main/java/com/fibbo/spring_app/domain/model/Booking.java
 /home/joao/Área de trabalho/Desafio-mapa-de-assentos/spring-app/src/main/java/com/fibbo/spring_app/domain/model/Seat.java
 /home/joao/Área de trabalho/Desafio-mapa-de-assentos/spring-app/src/main/java/com/fibbo/spring_app/domain/model/User.java
@@ -18,6 +22,8 @@
 /home/joao/Área de trabalho/Desafio-mapa-de-assentos/spring-app/src/main/java/com/fibbo/spring_app/domain/repository/SeatRepository.java
 /home/joao/Área de trabalho/Desafio-mapa-de-assentos/spring-app/src/main/java/com/fibbo/spring_app/domain/repository/UserRepository.java
 /home/joao/Área de trabalho/Desafio-mapa-de-assentos/spring-app/src/main/java/com/fibbo/spring_app/service/BookingService.java
+/home/joao/Área de trabalho/Desafio-mapa-de-assentos/spring-app/src/main/java/com/fibbo/spring_app/service/SeatService.java
 /home/joao/Área de trabalho/Desafio-mapa-de-assentos/spring-app/src/main/java/com/fibbo/spring_app/service/impl/BookingServiceImpl.java
+/home/joao/Área de trabalho/Desafio-mapa-de-assentos/spring-app/src/main/java/com/fibbo/spring_app/service/impl/SeatServiceImpl.java
 /home/joao/Área de trabalho/Desafio-mapa-de-assentos/spring-app/src/main/java/com/fibbo/spring_app/service/impl/UserServiceImpl.java
 /home/joao/Área de trabalho/Desafio-mapa-de-assentos/spring-app/src/main/java/com/fibbo/spring_app/service/userService.java

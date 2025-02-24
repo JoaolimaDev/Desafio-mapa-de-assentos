@@ -121,5 +121,17 @@ public class BookingServiceImpl implements BookingService {
         , HttpStatus.BAD_REQUEST));
         bookingRepository.delete(booking);
     }
+
+    @Override
+    public Booking findbySeat(String id) {
+
+        Seat seat = seatRepository.findById(UUID.fromString(id))
+        .orElseThrow(() -> new CustomException("Nenhum assento disponível para o id enviado! " + id,
+        HttpStatus.BAD_REQUEST));
+
+        return bookingRepository.findBySeatAndAcao(seat, Booking.StatusBooking.ALOCACAO)
+        .orElseThrow(() -> new CustomException("Nenhuma reserva encontrada para o id: " + id
+        , HttpStatus.BAD_REQUEST));
+    }
     
 }

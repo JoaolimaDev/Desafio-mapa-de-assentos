@@ -1,9 +1,6 @@
 package com.fibbo.spring_app.controller;
 
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -96,6 +93,15 @@ public class BookingController {
         Booking booking = bookingService.updateBooking(request, id, bookingRequest);
         BookingResponseDTO response = new BookingResponseDTO(booking);
 
+
+        return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping("/findbySeat/{id}")
+    public ResponseEntity<BookingResponseDTO> findbySeat(@RequestParam String id){
+
+        Booking booking = bookingService.findbySeat(id);
+        BookingResponseDTO response = new BookingResponseDTO(booking);
 
         return ResponseEntity.ok().body(response);
     }

@@ -7,7 +7,7 @@ export const securityGuard: CanActivateFn = (route, state) => {
 
   const http = inject(HttpClient);
   const router = inject(Router);
-  const apiUrl = 'http://localhost:8080/api/booking?page=0&size=1';
+  const apiUrl = 'http://localhost:8080/api/booking/?page=0&size=1';
 
 
   return http.get(apiUrl, { observe: 'response', withCredentials: true }).pipe(

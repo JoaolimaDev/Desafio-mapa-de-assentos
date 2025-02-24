@@ -1,10 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Login } from '../models/login';
 import { SeatsPageable } from '../models/seats-pageable';
-import { SeatResponse } from '../models/seat-response';
-import { Observable } from 'rxjs';
+import { Seat } from '../models/seat-response';
+import { catchError, map, Observable, of, tap } from 'rxjs';
+import { BookingResponse } from '../models/element';
 
 @Injectable({
   providedIn: 'root'
@@ -41,31 +42,61 @@ export class ApiService {
 
   }
 
-  allSeats(pageable: SeatsPageable): Observable<SeatResponse> {
-    return this.http.get<SeatResponse>(
-      `${this.apiUrl}/api/seat?page=${pageable.page}&size=${pageable.size}`,
+  allSeats(): Observable<Seat[]> {
+    return this.http.get<Seat[]>(
+      `${this.apiUrl}/api/seat/`,
       { withCredentials: true }
     );
   }
-  
-  
-  logout(){
 
-    this.http.post<{ mensagem: string; status: string }>(this.apiUrl + "/api/auth/logout", {}, { withCredentials: true }).subscribe({
+  findbySeat(id : String){
+    return this.http.get<BookingResponse>(`${this.apiUrl}/api/booking/findbySeat/{id}?id=${id}`
+    , { withCredentials: true });
+  }
 
+  bookingSeat(id : String, acao : Boolean){
+    
+    const requestBody = {
+      seatId: (acao) ? id : "",
+      acao: (acao) ? "ALOCACAO" : "REMOCAO" 
+    };
+
+
+    const method = (acao) ? this.http.post.bind(this.http): this.http.put.bind(this.http);
+    const param = (acao) ? "" : "?id=" + id;
+
+    method(this.apiUrl + `/api/booking/${param}`, requestBody,
+    { withCredentials: true }).subscribe({
       next: (response) => {
-        if (response.status) {
-
-          this.router.navigate(['/login']);
-        }
+        console.log(response);
       },
-      error: (error) => { 
+      error: (error) => {
         if (error.status === 400) {
           alert(error.error.mensagem);
-        }
+        }    
       }
-      
-
     });
+
   }
+  
+  logout(): void {
+    this.http
+      .post<HttpResponse<any>>(this.apiUrl + "/api/auth/logout", {}, { 
+        withCredentials: true, 
+        observe: 'response' 
+      })
+      .pipe(
+        tap((response: HttpResponse<any>) => {
+          if (response.status === 204) {
+            this.router.navigate(['/login']);
+          }
+        }),
+        catchError((error) => {
+          this.router.navigate(['/login']);
+          return of(false);
+        })
+      )
+      .subscribe();
+  }
+  
 }

@@ -13,6 +13,7 @@ public interface BookingService {
     public Page<Booking> listBookings(int page, int size);
     public Booking getBookingById(String id);
     public void deleteBooking(String id);
+    public Booking findbySeat(String id);
     
 
 }

@@ -1,15 +1,14 @@
   
 
 <div class="seat-container">
-
-
     <mat-icon 
-    *ngFor="let seat of seats" 
-    (click)="toggleSeat(seat)"
-    [ngClass]="{ 'selected': seat.selected }">
-    event_seat
+      *ngFor="let seat of seats" 
+      (click)="toggleSeat(seat)"
+      (mouseover)="mouseOver(seat)"
+      [matTooltip]="seat.selected ? seat.tooltipText : ''"
+      [ngClass]="{ 'selected': seat.selected }">
+      event_seat
+      <span>{{ seat.seatData.id }}</span>
     </mat-icon>
-
-    
-</div>
-    
+  </div>
+  
